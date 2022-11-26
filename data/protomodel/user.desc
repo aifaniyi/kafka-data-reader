@@ -1,0 +1,24 @@
+
+±
+address.proto
+protomodel"{
+Address"
+streetNumber (	RstreetNumber
+
+streetName (	R
+streetName
+city (	Rcity
+country (	RcountryBZ../protomodelbproto3
+Ÿ
+
+user.proto
+protomodeladdress.proto"Ü
+User
+id (	Rid
+	firstname (	R	firstname
+
+middlename (	R
+middlename
+lastname (	Rlastname;
+currentAddress (2.protomodel.AddressRcurrentAddress-
+address (2.protomodel.AddressRaddressBZ../protomodelbproto3

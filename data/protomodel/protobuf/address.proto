@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package protomodel;
+option go_package = "../protomodel";
+ 
+message Address {
+    // street number
+    string streetNumber = 1;
+
+    // streetname
+    string streetName = 2;
+
+    // city
+    string city = 3;
+
+    // country
+    string country = 4;
+}

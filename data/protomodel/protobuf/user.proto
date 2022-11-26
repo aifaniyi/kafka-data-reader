@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package protomodel;
+option go_package = "../protomodel";
+
+import "address.proto";
+ 
+message User {
+    // identifier
+    string id = 1;
+
+    // users firstname
+    string firstname = 2;
+
+    // users middlename
+    repeated string middlename = 3;
+
+    // users lastname
+    string lastname = 4;
+
+    // current address
+    repeated Address currentAddress = 5;
+
+    // address history
+    repeated Address address = 6;
+}
