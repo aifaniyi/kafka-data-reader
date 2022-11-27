@@ -7,6 +7,8 @@ func NewWriter(inTopic string, outputConfig *OutputConfig) (Writer, error) {
 		return NewKafkaWriter(outputConfig.KafkaConfig.Brokers, outputConfig.KafkaConfig.Topic)
 
 	default:
-		return NewFileWriter(inTopic)
+		return NewFileWriter(inTopic, outputConfig.OutputFormat,
+			outputConfig.ProtoJsonOutputFormat.DescriptorFile,
+			outputConfig.ProtoJsonOutputFormat.DescriptorFullname)
 	}
 }

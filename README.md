@@ -38,4 +38,24 @@ kafka-data-reader byMessageKey \
      --key key2 \
      --offset timestamp \
      --timestamp 2022-11-26T12:57:30.860
+
+# output json format for protobuf message
+kafka-data-reader fromPartitionOffset \
+    --broker kafka-a-01:9092 \
+    --topic sample-topic-v1 \
+    --partition 0 \
+    --offset 11 \
+    --output file \
+    --format json \
+    --filedescriptor /home/aifaniyi/Documents/dev/go/src/github.com/aifaniyi/kafka-data-reader/data/protomodel/user.desc \
+    --filedescriptorfullname protomodel.User
+
+# copy message(s) to another kafka topic
+kafka-data-reader fromPartitionOffset \
+    --broker kafka-a-01:9092 \
+    --topic sample-topic-v1 \
+    --partition 3 \
+    --offset 11 \
+    --output kafka \
+    --outtopic sample-topic-v2
 ```

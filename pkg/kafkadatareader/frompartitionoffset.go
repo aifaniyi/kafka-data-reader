@@ -58,6 +58,7 @@ func (r *ReaderImpl) ReadMessageAtPartitionOffset(topic string, partition int32,
 						log.Printf("--- found message --- partition %d, offset %d, timestamp %v", partition, offset, e.Timestamp)
 
 						r.writer.Write(e)
+						r.writer.Flush()
 						run = false
 					}
 

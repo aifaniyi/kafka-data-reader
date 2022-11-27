@@ -106,6 +106,8 @@ Possible values include
 	byMessageKeyCmd.Flags().StringP("format", "f", "binary", "use binary or json output format")
 	byMessageKeyCmd.Flags().StringP("outbroker", "", "", "output broker to use if kafka output is selected, defaults to broker if none is provided")
 	byMessageKeyCmd.Flags().StringP("outtopic", "", "", "output topic to use if kafka output is selected")
+	byMessageKeyCmd.Flags().StringP("filedescriptor", "", "", "protobuf file descriptor to be used i.e a compiled protobuf .desc file")
+	byMessageKeyCmd.Flags().StringP("filedescriptorfullname", "", "", "protobuf message fullname e.g package.Message")
 
 	// non optional
 	// byMessageKeyCmd.MarkFlagRequired("broker")
@@ -172,9 +174,30 @@ func getOutputConfig(cmd *cobra.Command) (*messagewriter.OutputConfig, error) {
 		return nil, fmt.Errorf("format must be provided: %v", err)
 	}
 
+	fileDescriptor, err := cmd.Flags().GetString("filedescriptor")
+	if err != nil {
+		return nil, fmt.Errorf("filedescriptor must be provided: %v", err)
+	}
+
+	fileDescriptorFullname, err := cmd.Flags().GetString("filedescriptorfullname")
+	if err != nil {
+		return nil, fmt.Errorf("filedescriptorfullname must be provided: %v", err)
+	}
+
+	var protoJsonOutputFormat *messagewriter.ProtoJsonOutputFormat
 	outputFormat := messagewriter.Binary // binary output by default
 	if format == "json" && output != "kafka" {
 		outputFormat = messagewriter.Json
+
+		// ensure filedescriptor and descriptor name params are provided
+		if fileDescriptor == "" || fileDescriptorFullname == "" {
+			return nil, fmt.Errorf("filedescriptor and filedescriptorfullname must be provided: %v", err)
+		}
+
+		protoJsonOutputFormat = &messagewriter.ProtoJsonOutputFormat{
+			DescriptorFile:     fileDescriptor,
+			DescriptorFullname: fileDescriptorFullname,
+		}
 	}
 
 	switch output {
@@ -202,9 +225,10 @@ func getOutputConfig(cmd *cobra.Command) (*messagewriter.OutputConfig, error) {
 
 	default: // write to file
 		return &messagewriter.OutputConfig{
-			OutputLocation: messagewriter.File,
-			KafkaConfig:    nil,
-			OutputFormat:   outputFormat,
+			OutputLocation:        messagewriter.File,
+			KafkaConfig:           nil,
+			OutputFormat:          outputFormat,
+			ProtoJsonOutputFormat: protoJsonOutputFormat,
 		}, nil
 	}
 }

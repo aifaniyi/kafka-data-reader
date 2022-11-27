@@ -11,7 +11,7 @@ func TestProtoBin2Json(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if result != "{}" {
+	if string(result) != "{}" {
 		t.Fatal("result should return empty json message for nil")
 	}
 }

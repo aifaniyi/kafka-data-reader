@@ -82,6 +82,8 @@ func init() {
 	fromPartitionOffsetCmd.Flags().StringP("format", "f", "binary", "use binary or json output format")
 	fromPartitionOffsetCmd.Flags().StringP("outbroker", "", "", "output broker to use if kafka output is selected, defaults to broker if none is provided")
 	fromPartitionOffsetCmd.Flags().StringP("outtopic", "", "", "output topic to use if kafka output is selected")
+	fromPartitionOffsetCmd.Flags().StringP("filedescriptor", "", "", "protobuf file descriptor to be used i.e a compiled protobuf .desc file")
+	fromPartitionOffsetCmd.Flags().StringP("filedescriptorfullname", "", "", "protobuf message fullname e.g package.Message")
 }
 
 func run(broker, topic string, partition int32, offset int64,

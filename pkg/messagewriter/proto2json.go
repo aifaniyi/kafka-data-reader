@@ -13,18 +13,18 @@ import (
 	"google.golang.org/protobuf/types/dynamicpb"
 )
 
-func protoBin2Json(data []byte, descriptorFile, descriptorFullname string) (string, error) {
+func protoBin2Json(data []byte, descriptorFile, descriptorFullname string) ([]byte, error) {
 	descriptorFullnameSplit := strings.Split(descriptorFullname, ".")
 	descriptorName := descriptorFullnameSplit[len(descriptorFullnameSplit)-1]
 
 	registry, err := createProtoRegistry(descriptorFile)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	descByName, err := registry.FindDescriptorByName(protoreflect.FullName(descriptorFullname))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	msgTypeFromFileDesc := descByName.
@@ -35,15 +35,15 @@ func protoBin2Json(data []byte, descriptorFile, descriptorFullname string) (stri
 	msg := dynamicpb.NewMessage(msgTypeFromFileDesc)
 	err = proto.Unmarshal(data, msg)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	jsonBytes, err := protojson.Marshal(msg)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(jsonBytes), nil
+	return jsonBytes, nil
 }
 
 func createProtoRegistry(filename string) (*protoregistry.Files, error) {

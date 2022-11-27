@@ -58,3 +58,7 @@ func (k *KafkaWriter) Write(message *kafka.Message) error {
 func (k *KafkaWriter) Close() {
 	k.producer.Close()
 }
+
+func (k *KafkaWriter) Flush() {
+	k.producer.Flush(1000)
+}

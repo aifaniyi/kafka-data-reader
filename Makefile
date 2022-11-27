@@ -7,3 +7,6 @@ init-environment: stop
 
 generate:
 	go generate ./...
+
+install:
+	go install

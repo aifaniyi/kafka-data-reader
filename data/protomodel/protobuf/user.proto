@@ -19,7 +19,7 @@ message User {
     string lastname = 4;
 
     // current address
-    repeated Address currentAddress = 5;
+    Address currentAddress = 5;
 
     // address history
     repeated Address address = 6;
