@@ -13,6 +13,7 @@ type FileWriter struct {
 	baseDir string
 }
 
+// TODO: add json file generation for filewriter
 func NewFileWriter(topic string) (*FileWriter, error) {
 
 	var baseDir string
